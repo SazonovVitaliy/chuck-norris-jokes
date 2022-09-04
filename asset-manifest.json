@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/chuck-norris-jokes/static/css/main.22e304a9.css",
+    "main.css": "/chuck-norris-jokes/static/css/main.113c8a3d.css",
     "main.js": "/chuck-norris-jokes/static/js/main.0ad073e9.js",
     "index.html": "/chuck-norris-jokes/index.html",
-    "main.22e304a9.css.map": "/chuck-norris-jokes/static/css/main.22e304a9.css.map",
+    "main.113c8a3d.css.map": "/chuck-norris-jokes/static/css/main.113c8a3d.css.map",
     "main.0ad073e9.js.map": "/chuck-norris-jokes/static/js/main.0ad073e9.js.map"
   },
   "entrypoints": [
-    "static/css/main.22e304a9.css",
+    "static/css/main.113c8a3d.css",
     "static/js/main.0ad073e9.js"
   ]
 }
