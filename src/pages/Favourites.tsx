@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { useAppSelector } from "../hooks/hook";
 import { favouritesActions } from "../store/slices/favouritesSlice";
 import { useDispatch } from "react-redux";
@@ -8,22 +8,24 @@ const Favourites: FC = () => {
   const { favourites } = useAppSelector((state) => state.favourites);
   const { removeFromFavourites, removeAllFavourites } = favouritesActions;
   const dispatch = useDispatch();
-  console.log(favourites);
+
   const handleRemove = (fav: IJoke) => {
     dispatch(removeFromFavourites(fav));
   };
-  const handleClearStorage = () => {
+
+  const handleClearStorage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     dispatch(removeAllFavourites());
   };
-  useEffect(() => {}, [favourites]);
+
   return (
     <>
       <div className="wrapper">
         <div className="container">
           <h1 className="title">Favourites Jokes</h1>
           <div className="btn-clear">
-            <button className="btn" onClick={() => handleClearStorage()}>
-              Clear Favorites
+            <button className="btn" onClick={handleClearStorage}>
+              Clear Favourites
             </button>
           </div>
           <div className="favourites-content">

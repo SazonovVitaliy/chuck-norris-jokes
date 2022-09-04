@@ -25,6 +25,7 @@ export const favouritesSlice = createSlice({
       state.favourites = state.favourites.filter(
         (fav) => fav.id !== action.payload.id
       );
+      localStorage.setItem(LS_FAV_JOKES, JSON.stringify(state.favourites));
     },
     removeAllFavourites(state) {
       localStorage.clear();

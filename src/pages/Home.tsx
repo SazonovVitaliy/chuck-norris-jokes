@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { API, FAVOURITES_ROUTE } from "../utils/const";
@@ -15,18 +15,17 @@ const Home: FC = () => {
     axios.get<IJoke>(`${API}/jokes/random`).then(({ data }) => setJoke(data));
   };
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     fetchRandomJoke();
     setIsFav(false);
   };
-  const handleAddToFavourites = () => {
+  const handleAddToFavourites = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     joke && dispatch(addToFavourites(joke));
     setIsFav(true);
   };
-  useEffect(() => {
-    if (!showJokes) {
-    }
-  }, [showJokes]);
+
   const handleRemoveFromFavourites = (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -34,17 +33,28 @@ const Home: FC = () => {
     joke && dispatch(removeFromFavourites(joke));
     setIsFav(false);
   };
-  const handleClickShowJokes = () => {
-    setShowJokes(!showJokes);
-    try {
-      const interval = setInterval(function () {
-        fetchRandomJoke();
-      }, 3000);
-    } catch (error: any) {
-      console.log(error.message);
+
+  useEffect(() => {
+    if (showJokes) {
+      setInterval(fetchJokesByInterval, 3000);
+      setIsFav(false);
     }
+    //clearInterval()
+  }, [showJokes]);
+  const handleClickShowJokes = () => {
+    setShowJokes(true);
   };
-  console.log(isFav);
+
+  const fetchJokesByInterval = () => {
+    showJokes === true && fetchRandomJoke();
+    setIsFav(false);
+  };
+  const handleCancelShowJokes = () => {
+    setShowJokes(false);
+  };
+
+  //let timerID = setInterval(fetchJokesByInterval, 3000);
+  console.log(showJokes);
 
   return (
     <>
@@ -62,7 +72,7 @@ const Home: FC = () => {
                     New Joke every 3s
                   </button>
                 ) : (
-                  <button className="btn" onClick={handleClickShowJokes}>
+                  <button className="btn" onClick={handleCancelShowJokes}>
                     Stop Showing Jokes
                   </button>
                 )}
