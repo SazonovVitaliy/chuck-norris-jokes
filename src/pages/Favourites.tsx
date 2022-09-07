@@ -3,10 +3,12 @@ import { useAppSelector } from "../hooks/hook";
 import { favouritesActions } from "../store/slices/favouritesSlice";
 import { useDispatch } from "react-redux";
 import { IJoke } from "./../types/types";
+import { useNavigate } from "react-router-dom";
 
 const Favourites: FC = () => {
   const { favourites } = useAppSelector((state) => state.favourites);
   const { removeFromFavourites, removeAllFavourites } = favouritesActions;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleRemove = (fav: IJoke) => {
@@ -17,6 +19,7 @@ const Favourites: FC = () => {
     e.preventDefault();
     dispatch(removeAllFavourites());
   };
+  console.log(favourites);
 
   return (
     <>
@@ -24,9 +27,14 @@ const Favourites: FC = () => {
         <div className="container">
           <h1 className="title">Favourites Jokes</h1>
           <div className="btn-clear">
-            <button className="btn" onClick={handleClearStorage}>
-              Clear Favourites
+            <button className="btn" onClick={() => navigate(-1)}>
+              Go Back
             </button>
+            {favourites.length > 0 && (
+              <button className="btn" onClick={handleClearStorage}>
+                Clear Favourites
+              </button>
+            )}
           </div>
           <div className="favourites-content">
             {favourites.map((fav) => (

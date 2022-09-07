@@ -84,18 +84,20 @@ const Home: FC = () => {
               </div>
             </div>
           </header>
-          <main className="main">
-            <div className="content">{joke?.value}</div>
-            {!isFav ? (
-              <button className="btn" onClick={handleAddToFavourites}>
-                Add To Favourites
-              </button>
-            ) : (
-              <button className="btn" onClick={handleRemoveFromFavourites}>
-                Remove from Favourites
-              </button>
-            )}
-          </main>
+          {joke && (
+            <main className="main">
+              <div className="content">{joke?.value}</div>
+              {!isFav ? (
+                <button className="btn" onClick={handleAddToFavourites}>
+                  Add To Favourites
+                </button>
+              ) : (
+                <button className="btn" onClick={handleRemoveFromFavourites}>
+                  Remove from Favourites
+                </button>
+              )}
+            </main>
+          )}
         </div>
       </div>
     </>
