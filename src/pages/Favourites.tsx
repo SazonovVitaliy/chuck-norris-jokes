@@ -19,7 +19,6 @@ const Favourites: FC = () => {
     e.preventDefault();
     dispatch(removeAllFavourites());
   };
-  console.log(favourites);
 
   return (
     <>

@@ -5,12 +5,15 @@ import { API, FAVOURITES_ROUTE } from "../utils/const";
 import { favouritesActions } from "../store/slices/favouritesSlice";
 import { useDispatch } from "react-redux";
 import { IJoke } from "./../types/types";
+
 const Home: FC = () => {
   const { addToFavourites, removeFromFavourites } = favouritesActions;
   const dispatch = useDispatch();
   const [joke, setJoke] = useState<IJoke>();
   const [showJokes, setShowJokes] = useState(false);
   const [isFav, setIsFav] = useState(false);
+  let intervalID: any;
+
   const fetchRandomJoke = () => {
     axios.get<IJoke>(`${API}/jokes/random`).then(({ data }) => setJoke(data));
   };
@@ -36,25 +39,24 @@ const Home: FC = () => {
 
   useEffect(() => {
     if (showJokes) {
-      setInterval(fetchJokesByInterval, 3000);
-      setIsFav(false);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      intervalID = setInterval(fetchJokesByInterval, 3000);
     }
-    //clearInterval()
+    return () => clearInterval(intervalID);
   }, [showJokes]);
+
   const handleClickShowJokes = () => {
     setShowJokes(true);
   };
 
   const fetchJokesByInterval = () => {
-    showJokes === true && fetchRandomJoke();
+    fetchRandomJoke();
     setIsFav(false);
   };
+
   const handleCancelShowJokes = () => {
     setShowJokes(false);
   };
-
-  //let timerID = setInterval(fetchJokesByInterval, 3000);
-  console.log(showJokes);
 
   return (
     <>

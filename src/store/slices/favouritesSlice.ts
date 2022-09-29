@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IJoke } from "../../types/types";
+import { getStorageItems, setStorageItems } from "../../utils";
 
-const LS_FAV_JOKES = "lsfj";
 interface IFavourites {
   favourites: IJoke[];
 }
 
 const initialState: IFavourites = {
-  favourites: JSON.parse(localStorage.getItem(LS_FAV_JOKES) ?? "[]"),
+  favourites: getStorageItems(),
 };
 
 export const favouritesSlice = createSlice({
@@ -19,13 +19,13 @@ export const favouritesSlice = createSlice({
         state.favourites.shift();
       }
       state.favourites.push(action.payload);
-      localStorage.setItem(LS_FAV_JOKES, JSON.stringify(state.favourites));
+      setStorageItems(state.favourites);
     },
     removeFromFavourites(state, action: PayloadAction<IJoke>) {
       state.favourites = state.favourites.filter(
         (fav) => fav.id !== action.payload.id
       );
-      localStorage.setItem(LS_FAV_JOKES, JSON.stringify(state.favourites));
+      setStorageItems(state.favourites);
     },
     removeAllFavourites(state) {
       localStorage.clear();

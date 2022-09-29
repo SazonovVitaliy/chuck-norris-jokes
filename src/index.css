@@ -92,6 +92,7 @@ code {
   outline: none;
   background: #60a3d8 linear-gradient(#89bbe2, #60a3d8 50%, #378bce);
   box-shadow: inset rgba(255, 255, 255, 0.5) 1px 1px;
+  cursor: pointer;
 }
 
 .btn-clear {
